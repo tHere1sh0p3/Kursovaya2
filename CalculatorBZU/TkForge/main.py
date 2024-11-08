@@ -1,8 +1,8 @@
-import os
-import sys
-import tkinter as tk
-import webbrowser
-import re
+import os               #Импортируем модуль os
+import sys              #Импортируем модуль sys
+import tkinter as tk    #Импортируем модуль tkinter задаем ему синононим tk
+import webbrowser       #Импортируем модуль webbrowser
+import re               #Импортируем модуль re
 
 
 def load_asset(path):
