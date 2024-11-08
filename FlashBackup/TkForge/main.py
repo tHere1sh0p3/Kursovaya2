@@ -31,19 +31,7 @@ image_1 = tk.PhotoImage(file=load_asset("1.png"))
 
 canvas.create_image(337, 298, image=image_1)
 
-button_1_image = tk.PhotoImage(file=load_asset("2.png"))
-
-button_1 = tk.Button(
-    image=button_1_image,
-    relief="flat",
-    borderwidth=0,
-    highlightthickness=0,
-    command=lambda: print("button_1 has been pressed!")
-)
-
-button_1.place(x=372, y=222, width=210, height=30)
-
-button_2_image = tk.PhotoImage(file=load_asset("3.png"))
+button_2_image = tk.PhotoImage(file=load_asset("2.png"))
 
 button_2 = tk.Button(
     image=button_2_image,
@@ -53,9 +41,9 @@ button_2 = tk.Button(
     command=lambda: print("button_2 has been pressed!")
 )
 
-button_2.place(x=423, y=294, width=115, height=35)
+button_2.place(x=372, y=222, width=210, height=30)
 
-button_3_image = tk.PhotoImage(file=load_asset("4.png"))
+button_3_image = tk.PhotoImage(file=load_asset("3.png"))
 
 button_3 = tk.Button(
     image=button_3_image,
@@ -65,7 +53,19 @@ button_3 = tk.Button(
     command=lambda: print("button_3 has been pressed!")
 )
 
-button_3.place(x=372, y=150, width=210, height=30)
+button_3.place(x=423, y=294, width=115, height=35)
+
+button_1_image = tk.PhotoImage(file=load_asset("4.png"))
+
+button_1 = tk.Button(
+    image=button_1_image,
+    relief="flat",
+    borderwidth=0,
+    highlightthickness=0,
+    command=lambda: print("button_1 has been pressed!")
+)
+
+button_1.place(x=372, y=150, width=210, height=30)
 
 button_4_image = tk.PhotoImage(file=load_asset("5.png"))
 
