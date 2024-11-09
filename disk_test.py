@@ -37,7 +37,7 @@ if __name__ == "__main__":
 
 
 root = Tk()
-root.title("METANIT.COM")
+root.title("FlashBackup")
 root.geometry("250x200")
  
 
