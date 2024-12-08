@@ -1,8 +1,8 @@
-import os               #Импортируем модуль os
-import sys              #Импортируем модуль sys
-import tkinter as tk    #Импортируем модуль tkinter задаем ему синононим tk
-import webbrowser       #Импортируем модуль webbrowser
-import re               #Импортируем модуль re
+import os  # Импортируем модуль os
+import sys  # Импортируем модуль sys
+import tkinter as tk  # Импортируем модуль tkinter задаем ему синононим tk
+import webbrowser  # Импортируем модуль webbrowser
+import re  # Импортируем модуль re
 
 
 def load_asset(path):
@@ -16,8 +16,6 @@ window.geometry("750x500")
 window.configure(bg="#eea155")
 window.title("CalculatorBZU")
 click = 0
-
-
 
 canvas = tk.Canvas(
     window,
@@ -72,12 +70,13 @@ image_1 = tk.PhotoImage(file=load_asset("1.png"))
 
 canvas.create_image(394, 306, image=image_1)
 
+
 def is_valid(newval):
     return re.match("^\+{0,1}\d{0,11}$", newval) is not None
 
 
 check = (window.register(is_valid), "%P")
- 
+
 errmsg = str()
 
 textbox_1 = TkForge_Entry(
@@ -87,7 +86,7 @@ textbox_1 = TkForge_Entry(
     placeholder="Количество углеводов",
     insertbackground="#594129",
     highlightthickness=0,
-    font=("tilda sans medium", 18 * -1)
+    font=("tilda sans medium", 18 * -1),
 )
 
 textbox_1.place(x=82, y=124, width=229, height=30)
@@ -100,7 +99,7 @@ textbox_2 = TkForge_Entry(
     placeholder="Количество жиров",
     insertbackground="#594129",
     highlightthickness=0,
-    font=("tilda sans medium", 18 * -1)   
+    font=("tilda sans medium", 18 * -1),
 )
 
 textbox_2.place(x=82, y=184, width=229, height=30)
@@ -113,19 +112,20 @@ textbox_3 = TkForge_Entry(
     placeholder="Количество белков",
     insertbackground="#594129",
     highlightthickness=0,
-    font=("tilda sans medium", 18 * -1)
+    font=("tilda sans medium", 18 * -1),
 )
 
 textbox_3.place(x=82, y=245, width=229, height=30)
 textbox_3.config(validate="key", validatecommand=check)
 
+
 def calculate():
     p = textbox_1.get()
-    p =int(p)
+    p = int(p)
     f = textbox_2.get()
-    f =int(f)
+    f = int(f)
     c = textbox_3.get()
-    c =int(c)
+    c = int(c)
     label["text"] = str(p * 4 + f * 9 + c * 4)
 
 
@@ -136,7 +136,7 @@ button_1 = tk.Button(
     relief="flat",
     borderwidth=0,
     highlightthickness=0,
-    command=calculate
+    command=calculate,
 )
 
 button_1.place(x=137, y=299, width=107, height=24)
@@ -158,7 +158,7 @@ label = tk.Label(
     text='Нажмите "Рассчитать"',
     anchor="nw",
     foreground="#594129",
-    font=("tilda sans medium", 18 * -1)
+    font=("tilda sans medium", 18 * -1),
 )
 label.place(x=82, y=347, width=229, height=30)
 
