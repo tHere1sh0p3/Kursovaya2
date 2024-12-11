@@ -8,6 +8,7 @@ import re
 import sys
 
 # Импорт модуля webbrowser для открытия веб-браузера
+from tkinter import messagebox
 import webbrowser
 
 # Импорт модуля tkinter под псевдонимом tk для создания графического интерфейса
@@ -15,74 +16,43 @@ import tkinter as tk
 
 # Дополнительный импорт всех классов и функций из tkinter без необходимости использовать префикс tk
 from tkinter import *
-from tkinter import ttk
 
 from IMT import CalculatorIMTWindow
 
 
 # Создание класса TkForge_Entry, который наследует от виджета Entry в tkinter
 class TkForge_Entry(tk.Entry):
-    # Конструктор класса, принимающий параметры master (родительский элемент) и kwargs (аргументы для виджетов)
     def __init__(
-        self, master=None, placeholder="Enter text", placeholder_fg="#594129", **kwargs
+        self, master=None, placeholder="Enter text", placeholder_fg="#bdbdbd", **kwargs
     ):
-
-        # Вызов конструктора родительского класса tk.Entry
         super().__init__(master, **kwargs)
 
-        # Сохранение параметров placeholder и placeholder_fg в качестве атрибутов класса
-        self.p, self.p_fg, self.fg = placeholder, placeholder_fg, self.cget("fg")
+        self.placeholder = placeholder
+        self.placeholder_fg = placeholder_fg
+        self.default_fg = self.cget("fg")  # Запоминаем стандартный цвет текста
 
-        # Вставка текста-заполнителя в виджет
-        self.putp()
+        self.insert(0, placeholder)  # Вставляем плейсхолдер сразу при инициализации
+        self.config(fg=placeholder_fg)  # Устанавливаем цвет плейсхолдера
 
-        # Привязка события получения фокуса (<FocusIn>) к методу toggle
-        self.bind("<FocusIn>", self.toggle)
+        self.bind("<FocusIn>", self.on_focus_in)  # Привязываем событие получения фокуса
+        self.bind("<FocusOut>", self.on_focus_out)  # Привязываем событие потери фокуса
 
-        # Привязка события потери фокуса (<FocusOut>) к методу toggle
-        self.bind("<FocusOut>", self.toggle)
+    def on_focus_in(self, event):
+        """Метод вызывается при получении фокуса"""
+        if self.get() == self.placeholder:  # Если текст совпадает с плейсхолдером
+            self.delete(0, tk.END)  # Удаляем плейсхолдер
+            self.config(fg=self.default_fg)  # Восстанавливаем стандартный цвет текста
 
-    # Метод для вставки заполнителя в виджет
-    def putp(self):
-        # Очистка содержимого виджета
-        self.delete(0, tk.END)
+    def on_focus_out(self, event):
+        """Метод вызывается при потере фокуса"""
+        if not self.get():  # Если поле стало пустым
+            self.insert(0, self.placeholder)  # Вставляем плейсхолдер обратно
+            self.config(fg=self.placeholder_fg)  # Устанавливаем цвет плейсхолдера
 
-        # Вставка текста-заполнителя
-        self.insert(0, self.p)
-
-        # Установка цвета шрифта для заполнителя
-        self.config(fg=self.p_fg)
-
-        # Установка флага, показывающего, что виджет содержит заполнитель
-        self.p_a = True
-
-    # Метод для переключения между состоянием заполнителя и обычным текстом при получении/потере фокуса
-    def toggle(self, event):
-        # Если виджет содержит заполнитель, удалить его и установить обычный цвет шрифта
-        if self.p_a:
-            self.delete(0, tk.END)
-            self.config(fg=self.fg)
-            self.p_a = False
-
-        # Если виджет пуст после потери фокуса, вставить заполнитель обратно
-        elif not self.get():
-            self.putp()
-
-    # Переопределенный метод get для возврата значения виджета, исключая случай, когда он содержит заполнитель
     def get(self):
-        # Возвращает пустую строку, если виджет содержит заполнитель, иначе возвращает содержимое виджета
-        return "" if self.p_a else super().get()
-
-    # Метод для установки состояния заполнителя вручную
-    def is_placeholder(self, b):
-        # Устанавливает флаг p_a и соответствующий цвет шрифта
-        self.p_a = b
-        self.config(fg=self.p_fg if b == True else self.fg)
-
-    # Метод для получения текущего текста-заполнителя
-    def get_placeholder(self):
-        # Возвращает текущий текст-заполнитель
-        return self.p
+        """Переопределяем метод get, чтобы исключить плейсхолдер из результата"""
+        value = super().get()
+        return value if value != self.placeholder else ""
 
 
 # Функция для загрузки ресурсов из папки assets
@@ -107,18 +77,20 @@ def is_valid(newval):
 def calculate():
     # Получение значения из первого текстового поля, преобразование его в целое число
     p = textbox_1.get()
-    p = int(p)
-
     # Получение значения из второго текстового поля, преобразование его в целое число
     f = textbox_2.get()
-    f = int(f)
-
     # Получение значения из третьего текстового поля, преобразование его в целое число
     c = textbox_3.get()
-    c = int(c)
-
+    if p and f and c:
+        p = int(p)
+        f = int(f)
+        c = int(c)
     # Вычисление результата по формуле и установка его в текст метки
-    label["text"] = str(p * 4 + f * 9 + c * 4)
+        label["text"] = str(p * 4 + f * 9 + c * 4)
+    else:
+        messagebox.showwarning(
+            "Внимание", "Пожалуйста, введите данные в программу."
+        )
 
 
 # Функция для создания нового окна
@@ -133,10 +105,12 @@ def open_window():
     else:
         # Создаем новое окно, если оно еще не было создано
         open_window.window = CalculatorIMTWindow()
+        open_window.window.grab_set()
 
         def on_destroy(event):
             if hasattr(open_window, "window"):
                 del open_window.window
+
 
 
 # Создание главного окна приложения
