@@ -5,9 +5,8 @@ from tkinter import PhotoImage, Entry, Label, Button, Canvas
 
 
 class CalculatorIMTWindow(tk.Toplevel):
-    def __init__(self, master=None):
-        super().__init__(master)
-        self.master = master
+    def __init__(self):
+        super().__init__()      
         self.geometry("400x500")
         self.configure(bg="#eea255")
         self.title("CalculatorIMT")
@@ -91,7 +90,7 @@ class MainWindow(tk.Tk):
         button_open_calculator.pack(pady=20)
     
     def open_calculator(self):
-        calculator_window = CalculatorIMTWindow(master=self)
+        calculator_window = CalculatorIMTWindow()
         calculator_window.grab_set()  # Блокируем главное окно до закрытия дочернего
 
 

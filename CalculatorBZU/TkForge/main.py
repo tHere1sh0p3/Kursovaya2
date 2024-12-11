@@ -100,7 +100,7 @@ def load_asset(path):
 # Функция для проверки валидности введенного числа
 def is_valid(newval):
     # Проверяет, соответствует ли введенное значение шаблону регулярного выражения (начинается с '+' или цифры, длина до 11 символов)
-    return re.match("^\+{0,1}\d{0,11}$", newval) is not None
+    return re.match(r"^\+{0,1}\d{0,11}$", newval) is not None
 
 
 # Функция для расчета результата на основе значений из трех текстовых полей
@@ -122,8 +122,21 @@ def calculate():
 
 
 # Функция для создания нового окна
-def open_calculator():
-    calculator_window = CalculatorIMTWindow()
+def open_window():
+    # Проверяем, есть ли уже открытое окно
+    if (
+        hasattr(open_window, "window")
+        and isinstance(open_window.window, CalculatorIMTWindow)
+        and open_window.window.winfo_exists()
+    ):
+        print("Окно уже открыто!")
+    else:
+        # Создаем новое окно, если оно еще не было создано
+        open_window.window = CalculatorIMTWindow()
+
+        def on_destroy(event):
+            if hasattr(open_window, "window"):
+                del open_window.window
 
 
 # Создание главного окна приложения
@@ -259,7 +272,7 @@ button_3 = tk.Button(
     relief="flat",  # Делаем кнопку плоской
     borderwidth=0,  # Убираем толщину рамки
     highlightthickness=0,  # Убираем выделение при фокусе
-    command=open_calculator,  # Вызываем функцию click123 при нажатии на кнопку
+    command=open_window,  # Вызываем функцию click123 при нажатии на кнопку
 )
 
 # Размещаем третью кнопку на экране по указанным координатам и размерам
@@ -283,4 +296,3 @@ root.resizable(False, False)
 # Запускаем основной цикл обработки событий программы
 if __name__ == "__main__":
     root.mainloop()
-
