@@ -108,19 +108,18 @@ def is_system_folder(folder_name):
     # Проверка, является ли папка системной
     return folder_name in ["System Volume Information", "$RECYCLE.BIN"]
 
+def update_progress_bar():
+    progress_bar['value'] += 1
+    window.update_idletasks()
 
 def copy_files_from_flash_drive(flash_drive_path, destination_folder):
-    if not os.path.exists(flash_drive_path):
-        logger.error(f'Флешка по пути {flash_drive_path} не найдена.')
-        messagebox.showerror("Ошибка", f"Флешка по пути {flash_drive_path} не найдена.")
-        return
-    
-    if not os.path.exists(destination_folder):
-        os.makedirs(destination_folder)
-        logger.info(f'Создана новая директория: {destination_folder}')
-
     for item in os.listdir(flash_drive_path):
         source_path = os.path.join(flash_drive_path, item)
+
+        
+        files = os.listdir(flash_drive_path)
+        visible_items = [item for item in files if not item.startswith("System Volume Information")]
+        progress_bar['maximum'] = len(visible_items)
 
         # Пропускаем системные папки
         if is_system_folder(item):
@@ -136,11 +135,13 @@ def copy_files_from_flash_drive(flash_drive_path, destination_folder):
             elif os.path.isdir(source_path):
                 shutil.copytree(source_path, destination_path)
                 logger.info(f'Скопирована директория: {source_path} -> {destination_path}')
+            update_progress_bar()
         except Exception as e:
             logger.exception(f'Ошибка при копировании {item}: {e}')
             messagebox.showerror("Ошибка", f"Ошибка при копировании {item}: {e}")
 
     messagebox.showinfo("Успех", "Файлы успешно скопированы!")
+    progress_bar['value'] = 0
 
 
 def extract_disk_path(input_string):
@@ -232,8 +233,9 @@ textbox_1 = TkForge_Entry(
 )
 textbox_1.place(x=31, y=237, width=209, height=23)
 
-# Создаем прогрессбар
-progress_bar = ttk.Progressbar(window, orient='horizontal', length=200, mode='determinate')
+  # Синий цвет
+
+progress_bar = ttk.Progressbar(window, orient='horizontal', length=200, mode='determinate', style="Horizontal.TProgressbar")
 progress_bar.place(x=23, y=337, width=254, height=20)
 
 window.resizable(False, False)
