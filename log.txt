@@ -216,3 +216,25 @@ TypeError: update_progress_bar() missing 1 required positional argument: 'copied
 2024-12-16 01:39:01,949 - INFO - Копирован файл: X:\Снимок экрана 2024-10-01 195400.png -> C:/Yarik/testBAckup/test4\Снимок экрана 2024-10-01 195400.png
 2024-12-16 01:39:01,950 - INFO - Копирован файл: X:\Снимок экрана 2024-12-16 003054.png -> C:/Yarik/testBAckup/test4\Снимок экрана 2024-12-16 003054.png
 2024-12-16 02:10:37,153 - WARNING - Путь к флешке или папке назначения не указан.
+2024-12-16 02:32:27,264 - INFO - Копирован файл: X:\01 - Good Morning.flac -> C:/Yarik/testBAckup/test4\01 - Good Morning.flac
+2024-12-16 02:32:28,129 - INFO - Копирован файл: X:\02 - Get Happy (2024).flac -> C:/Yarik/testBAckup/test4\02 - Get Happy (2024).flac
+2024-12-16 02:32:28,947 - INFO - Копирован файл: X:\03 - Oh, When The Saints.flac -> C:/Yarik/testBAckup/test4\03 - Oh, When The Saints.flac
+2024-12-16 02:32:29,743 - INFO - Копирован файл: X:\04 - World On A String.flac -> C:/Yarik/testBAckup/test4\04 - World On A String.flac
+2024-12-16 02:32:30,509 - INFO - Копирован файл: X:\05 - If My Friends Could See Me Now.flac -> C:/Yarik/testBAckup/test4\05 - If My Friends Could See Me Now.flac
+2024-12-16 02:32:31,565 - INFO - Копирован файл: X:\06 - That's Entertainment.flac -> C:/Yarik/testBAckup/test4\06 - That's Entertainment.flac
+2024-12-16 02:32:32,263 - INFO - Копирован файл: X:\07 - Smile.flac -> C:/Yarik/testBAckup/test4\07 - Smile.flac
+2024-12-16 02:32:33,046 - INFO - Копирован файл: X:\08 - The Joker.flac -> C:/Yarik/testBAckup/test4\08 - The Joker.flac
+2024-12-16 02:32:34,679 - INFO - Копирован файл: X:\10 - Gonna Build A Mountain.flac -> C:/Yarik/testBAckup/test4\10 - Gonna Build A Mountain.flac
+2024-12-16 02:32:35,516 - INFO - Копирован файл: X:\11 - Close To You.flac -> C:/Yarik/testBAckup/test4\11 - Close To You.flac
+2024-12-16 02:32:36,468 - INFO - Копирован файл: X:\12 - Happy Mistake.flac -> C:/Yarik/testBAckup/test4\12 - Happy Mistake.flac
+2024-12-16 02:32:36,693 - INFO - Скопирована директория: X:\1234 -> C:/Yarik/testBAckup/test4\1234
+2024-12-16 02:32:37,531 - INFO - Копирован файл: X:\13 - That's Life.flac -> C:/Yarik/testBAckup/test4\13 - That's Life.flac
+2024-12-16 02:32:37,587 - INFO - Копирован файл: X:\coverhq.jpg -> C:/Yarik/testBAckup/test4\coverhq.jpg
+2024-12-16 02:32:37,589 - INFO - Копирован файл: X:\foo_dr.txt -> C:/Yarik/testBAckup/test4\foo_dr.txt
+2024-12-16 02:32:37,590 - INFO - Скопирована директория: X:\Lady Gaga — Harlequin (2024) [FLAC] (24bit-48kHz) [Hi-Res] -> C:/Yarik/testBAckup/test4\Lady Gaga — Harlequin (2024) [FLAC] (24bit-48kHz) [Hi-Res]
+2024-12-16 02:32:37,591 - DEBUG - Пропущена системная папка: X:\System Volume Information
+2024-12-16 02:32:37,592 - INFO - Копирован файл: X:\[TR24][OF] Lady Gaga - Harlequin - 2024 (Pop) [rutracker-6578141].torrent -> C:/Yarik/testBAckup/test4\[TR24][OF] Lady Gaga - Harlequin - 2024 (Pop) [rutracker-6578141].torrent
+2024-12-16 02:32:37,594 - INFO - Копирован файл: X:\Снимок экрана 2024-10-01 195400.png -> C:/Yarik/testBAckup/test4\Снимок экрана 2024-10-01 195400.png
+2024-12-16 02:32:37,596 - INFO - Копирован файл: X:\Снимок экрана 2024-12-16 003054.png -> C:/Yarik/testBAckup/test4\Снимок экрана 2024-12-16 003054.png
+2024-12-16 02:32:47,963 - WARNING - Путь к флешке или папке назначения не указан.
+2024-12-16 02:35:11,158 - WARNING - The path to the flash drive or destination folder is not specified.

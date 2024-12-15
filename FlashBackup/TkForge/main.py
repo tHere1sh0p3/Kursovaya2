@@ -81,7 +81,7 @@ def get_volume_label(drive):
         )
         return label.value
     except Exception as e:
-        logger.error(f"Не удалось получить метку тома для {drive}. Ошибка: {e}")
+        logger.error(f"Failed to obtain a volume label for {drive}. Error: {e}")
         return str(e)
 
 
@@ -127,7 +127,7 @@ def copy_files_from_flash_drive(flash_drive_path, destination_folder):
 
         # Пропускаем системные папки
         if is_system_folder(item):
-            logger.debug(f"Пропущена системная папка: {source_path}")
+            logger.debug(f"Missing system folder: {source_path}")
             continue
 
         destination_path = os.path.join(destination_folder, item)
@@ -135,18 +135,18 @@ def copy_files_from_flash_drive(flash_drive_path, destination_folder):
         try:
             if os.path.isfile(source_path):
                 shutil.copy2(source_path, destination_path)
-                logger.info(f"Копирован файл: {source_path} -> {destination_path}")
+                logger.info(f"File copied: {source_path} -> {destination_path}")
             elif os.path.isdir(source_path):
                 shutil.copytree(source_path, destination_path)
                 logger.info(
-                    f"Скопирована директория: {source_path} -> {destination_path}"
+                    f"The directory is copied: {source_path} -> {destination_path}"
                 )
             update_progress_bar()
         except Exception as e:
-            logger.exception(f"Ошибка при копировании {item}: {e}")
-            messagebox.showerror("Ошибка", f"Ошибка при копировании {item}: {e}")
+            logger.exception(f"Copy error {item}: {e}")
+            messagebox.showerror("Error", f"Copy error {item}: {e}")
 
-    messagebox.showinfo("Успех", "Файлы успешно скопированы!")
+    messagebox.showinfo("Info", "Files successfully copied!")
     progress_bar["value"] = 0
 
 
@@ -175,9 +175,11 @@ def start_copy():
         print(disk_path)
         print(flash_drive)
         print(destination_folder)
-        logger.warning("Путь к флешке или папке назначения не указан.")
+        logger.warning(
+            "The path to the flash drive or destination folder is not specified."
+        )
         messagebox.showwarning(
-            "Внимание", "Пожалуйста, выберите флешку и папку назначения."
+            "Warning", "Please select the flash drive and the destination folder."
         )
 
 
@@ -241,7 +243,7 @@ button_3 = tk.Button(
     highlightthickness=0,
     command=lambda: webbrowser.open(
         "https://github.com/tHere1sh0p3/Kursovaya2",
-    )
+    ),
 )
 button_3.place(x=26, y=13, width=42, height=43)
 
