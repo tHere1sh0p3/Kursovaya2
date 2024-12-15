@@ -6,6 +6,7 @@ import sys
 import shutil
 import logging
 import threading
+import webbrowser
 import psutil
 import ctypes
 import tkinter as tk
@@ -59,10 +60,10 @@ def load_asset(path):
 # Настройка логгера
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
 
 # Файловый хендлер для логирования в файл
-file_handler = logging.FileHandler('log.txt')
+file_handler = logging.FileHandler("log.txt")
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
@@ -80,7 +81,7 @@ def get_volume_label(drive):
         )
         return label.value
     except Exception as e:
-        logger.error(f'Не удалось получить метку тома для {drive}. Ошибка: {e}')
+        logger.error(f"Не удалось получить метку тома для {drive}. Ошибка: {e}")
         return str(e)
 
 
@@ -108,22 +109,25 @@ def is_system_folder(folder_name):
     # Проверка, является ли папка системной
     return folder_name in ["System Volume Information", "$RECYCLE.BIN"]
 
+
 def update_progress_bar():
-    progress_bar['value'] += 1
+    progress_bar["value"] += 1
     window.update_idletasks()
+
 
 def copy_files_from_flash_drive(flash_drive_path, destination_folder):
     for item in os.listdir(flash_drive_path):
         source_path = os.path.join(flash_drive_path, item)
 
-        
         files = os.listdir(flash_drive_path)
-        visible_items = [item for item in files if not item.startswith("System Volume Information")]
-        progress_bar['maximum'] = len(visible_items)
+        visible_items = [
+            item for item in files if not item.startswith("System Volume Information")
+        ]
+        progress_bar["maximum"] = len(visible_items)
 
         # Пропускаем системные папки
         if is_system_folder(item):
-            logger.debug(f'Пропущена системная папка: {source_path}')
+            logger.debug(f"Пропущена системная папка: {source_path}")
             continue
 
         destination_path = os.path.join(destination_folder, item)
@@ -131,30 +135,34 @@ def copy_files_from_flash_drive(flash_drive_path, destination_folder):
         try:
             if os.path.isfile(source_path):
                 shutil.copy2(source_path, destination_path)
-                logger.info(f'Копирован файл: {source_path} -> {destination_path}')
+                logger.info(f"Копирован файл: {source_path} -> {destination_path}")
             elif os.path.isdir(source_path):
                 shutil.copytree(source_path, destination_path)
-                logger.info(f'Скопирована директория: {source_path} -> {destination_path}')
+                logger.info(
+                    f"Скопирована директория: {source_path} -> {destination_path}"
+                )
             update_progress_bar()
         except Exception as e:
-            logger.exception(f'Ошибка при копировании {item}: {e}')
+            logger.exception(f"Ошибка при копировании {item}: {e}")
             messagebox.showerror("Ошибка", f"Ошибка при копировании {item}: {e}")
 
     messagebox.showinfo("Успех", "Файлы успешно скопированы!")
-    progress_bar['value'] = 0
+    progress_bar["value"] = 0
 
 
 def extract_disk_path(input_string):
-    match = re.search(r'\(([A-Z]:\\)\)', input_string)
+    match = re.search(r"\(([A-Z]:\\)\)", input_string)
     if match:
         return match.group(1)
     else:
         return None
 
+
 def run_in_thread(func, *args):
     thread = threading.Thread(target=func, args=args)
     thread.start()
-    
+
+
 def start_copy():
     selected_string = combobox.get()
     disk_path = extract_disk_path(selected_string)
@@ -167,7 +175,7 @@ def start_copy():
         print(disk_path)
         print(flash_drive)
         print(destination_folder)
-        logger.warning('Путь к флешке или папке назначения не указан.')
+        logger.warning("Путь к флешке или папке назначения не указан.")
         messagebox.showwarning(
             "Внимание", "Пожалуйста, выберите флешку и папку назначения."
         )
@@ -182,25 +190,28 @@ window.geometry("300x370")
 window.configure(bg="#808080")
 window.title("FlashBackup")
 
-image_1 = tk.PhotoImage(file=load_asset("1.png"))
+image_1 = tk.PhotoImage(file=load_asset("1_2.png"))
+image_2 = tk.PhotoImage(file=load_asset("1_3.png"))
+
 
 canvas = tk.Canvas(
     window,
     bg="#808080",
     width=300,
-    height=350,
+    height=370,
     bd=0,
     highlightthickness=0,
     relief="ridge",
 )
 canvas.place(x=0, y=0)
 canvas.create_image(153, 166, image=image_1)
+canvas.create_image(150, 347, image=image_2)
 
 combobox = ttk.Combobox(
     values=drives,
     width=17,
 )
-combobox.pack(anchor="ne", padx=14, pady=9)
+combobox.place(x=157, y=11, width=126, height=21)
 
 button_1_image = tk.PhotoImage(file=load_asset("2.png"))
 button_1 = tk.Button(
@@ -210,7 +221,7 @@ button_1 = tk.Button(
     highlightthickness=0,
     command=select_outpath,
 )
-button_1.place(x=247, y=240, width=21, height=16)
+button_1.place(x=245, y=242, width=21, height=16)
 
 button_2_image = tk.PhotoImage(file=load_asset("3.png"))
 button_2 = tk.Button(
@@ -220,7 +231,19 @@ button_2 = tk.Button(
     highlightthickness=0,
     command=start_copy,
 )
-button_2.place(x=77, y=287, width=146, height=33)
+button_2.place(x=75, y=289, width=146, height=33)
+
+button_3_image = tk.PhotoImage(file=load_asset("GitHub.png"))
+button_3 = tk.Button(
+    image=button_3_image,
+    relief="flat",
+    borderwidth=0,
+    highlightthickness=0,
+    command=lambda: webbrowser.open(
+        "https://github.com/tHere1sh0p3/Kursovaya2",
+    )
+)
+button_3.place(x=26, y=13, width=42, height=43)
 
 textbox_1 = TkForge_Entry(
     bd=0,
@@ -231,11 +254,16 @@ textbox_1 = TkForge_Entry(
     highlightthickness=0,
     font=("tilda sans medium", 13),
 )
-textbox_1.place(x=31, y=237, width=209, height=23)
+textbox_1.place(x=29, y=238, width=209, height=23)
 
-  # Синий цвет
 
-progress_bar = ttk.Progressbar(window, orient='horizontal', length=200, mode='determinate', style="Horizontal.TProgressbar")
+progress_bar = ttk.Progressbar(
+    window,
+    orient="horizontal",
+    length=200,
+    mode="determinate",
+    style="Horizontal.TProgressbar",
+)
 progress_bar.place(x=23, y=337, width=254, height=20)
 
 window.resizable(False, False)

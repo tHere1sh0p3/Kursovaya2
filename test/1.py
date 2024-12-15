@@ -66,7 +66,7 @@ button_start = Button(root, text="Начать копирование", command=
 button_start.grid(row=2, column=0, columnspan=2, pady=10)
 
 # Прогрессбар
-progress_bar = Progressbar(root, orient=HORIZONTAL, length=400, mode="determinate")
+progress_bar = Progressbar(root, orient=HORIZONTAL,value= 50, length=400, mode="determinate")
 progress_bar.grid(row=3, column=0, columnspan=2, padx=10, pady=20)
 
 # Запуск главного цикла приложения
